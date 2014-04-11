@@ -1,24 +1,23 @@
 package entitypart.systems;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import entitypart.epf.Entity;
 import entitypart.epf.EntityManager;
-import entitypart.items.Item;
-import entitypart.items.ItemType;
+import entitypart.items.HealSpell;
+import entitypart.items.Spell;
+import entitypart.items.Weapon;
 import entitypart.parts.Alliance;
 import entitypart.parts.AlliancePart;
 import entitypart.parts.DescriptionPart;
 import entitypart.parts.EquipmentPart;
 import entitypart.parts.HealthPart;
+import entitypart.parts.ManaPart;
+import entitypart.parts.Mentality;
+import entitypart.parts.MentalityPart;
 
 public class BattleSystem {
 	
-	private Random random = new Random();
 	private EntityManager entityManager;
 	
 	public BattleSystem(EntityManager entityManager) {
@@ -26,67 +25,86 @@ public class BattleSystem {
 	}
 	
 	public void update() {
-		List<Entity> entities = entityManager.getAll();
-		Map<Alliance, List<Entity>> entitiesByAlliance = new HashMap<Alliance, List<Entity>>();
-		entitiesByAlliance.put(Alliance.MONSTERS, filter(entities, Alliance.MONSTERS));
-		entitiesByAlliance.put(Alliance.VILLAGERS, filter(entities, Alliance.VILLAGERS));
+		List<Entity> characters = entityManager.getAll();
 		
-		for (Entity entity : entities) {
+		for (Entity entity : characters) {
+			if (!entity.get(HealthPart.class).isAlive()) {
+				entityManager.remove(entity);
+				System.out.println(entity.get(DescriptionPart.class).getName() + " is dead!");
+			}
 			if (entity.isActive()) {
-				if (entity.has(HealthPart.class) && entity.has(DescriptionPart.class)) {
-					if (entity.get(HealthPart.class).getHealth() <= 0) {
-						entityManager.remove(entity);
-						System.out.println(entity.get(DescriptionPart.class).getName() + " is dead!");
-					}
-				}
-				
-				if (entity.has(DescriptionPart.class) && entity.has(AlliancePart.class)
-						&& entity.has(EquipmentPart.class)) {
-					Item heldItem = entity.get(EquipmentPart.class).getHeldItem();
-					List<Entity> targetList = getTargets(entitiesByAlliance, 
-							entity.get(AlliancePart.class).getAlliance(), 
-							heldItem.getItemType());
-					if (targetList.size() > 0) {
-						Entity target = targetList.get(random.nextInt(targetList.size()));
-						System.out.println(entity.get(DescriptionPart.class).getName()
-								+ " used item " + heldItem.getName());
-						heldItem.use(target);
-					}
+				System.out.println(entity.get(DescriptionPart.class).getName() + " - Health: "
+						+ entity.get(HealthPart.class).getHealth() + " - Mana: " + 
+						+ entity.get(ManaPart.class).getMana());
+				act(entity, characters);
+			}
+		}
+	}
+	
+	public void act(Entity actingCharacter, List<Entity> characters) {
+		Mentality mentality = actingCharacter.get(MentalityPart.class).getMentality();
+		
+		if (mentality == Mentality.OFFENSIVE) {
+			attemptAttack(actingCharacter, characters);
+		}
+		else if (mentality == Mentality.SUPPORT) {
+			boolean healed = attemptHeal(actingCharacter, characters);
+			if (!healed) {
+				attemptAttack(actingCharacter, characters);
+			}
+		}
+	}
+	
+	private void attemptAttack(Entity actingCharacter, List<Entity> characters) {
+		Alliance alliance = actingCharacter.get(AlliancePart.class).getAlliance();
+		
+		for (Entity character : characters) {
+			if (character.get(HealthPart.class).isAlive()) {
+				Alliance characterAlliance = character.get(AlliancePart.class).getAlliance();
+				if (characterAlliance != alliance) {
+					Weapon weapon = actingCharacter.get(EquipmentPart.class).getWeapon();
+					weapon.attack(character);
+					break;
 				}
 			}
 		}
 	}
 	
-	private List<Entity> filter(List<Entity> entities, Alliance alliance) {
-		List<Entity> filteredEntities = new ArrayList<Entity>();
-		for (Entity entity : entities) {
-			if (entity.has(AlliancePart.class) && entity.get(AlliancePart.class).getAlliance() == alliance) {
-				filteredEntities.add(entity);
+	private boolean attemptHeal(Entity actingCharacter, List<Entity> characters) {
+		Alliance alliance = actingCharacter.get(AlliancePart.class).getAlliance();
+		ManaPart manaPart = actingCharacter.get(ManaPart.class);
+		Spell healSpell = actingCharacter.get(EquipmentPart.class).getSpell(HealSpell.class);
+		boolean healed = false;
+		Entity target = null;
+		
+		if (healSpell != null && manaPart.getMana() >= healSpell.getCost()) {
+			for (Entity character : characters) {
+				if (character.get(HealthPart.class).isAlive()) {
+					Alliance characterAlliance = character.get(AlliancePart.class).getAlliance();
+					if (characterAlliance == alliance) {
+						if (isPotentialHealTargetBetter(target, character)) {
+							target = character;
+						}
+					}
+				}
 			}
 		}
-		return filteredEntities;
+		
+		if (target != null) {
+			healSpell.use(target);
+			manaPart.setMana(manaPart.getMana() - healSpell.getCost());
+			healed = true;
+		}
+		
+		return healed;
 	}
 	
-	private List<Entity> getTargets(Map<Alliance, List<Entity>> entitiesByAlliance, Alliance targeterAlliance, 
-			ItemType itemType) {
-		List<Entity> targets = new ArrayList<Entity>();
-		
-		if (itemType == ItemType.OFFENSIVE) {
-			for (Map.Entry<Alliance, List<Entity>> characters : entitiesByAlliance.entrySet()) {
-				if (characters.getKey() != targeterAlliance) {
-					targets = characters.getValue();
-				}
-			}
-		}
-		else if (itemType == ItemType.SUPPORT) {
-			for (Map.Entry<Alliance, List<Entity>> characters : entitiesByAlliance.entrySet()) {
-				if (characters.getKey() == targeterAlliance) {
-					targets = characters.getValue();
-				}
-			}
-		}
-		
-		return targets;
+	private boolean isPotentialHealTargetBetter(Entity target, Entity potentialTarget) {
+		HealthPart potentialTargetHealthPart = potentialTarget.get(HealthPart.class);
+		boolean isPotentialTargetBetter = potentialTargetHealthPart.getHealth() < potentialTargetHealthPart.getMaxHealth()
+				&& (target == null || potentialTarget.get(HealthPart.class).getHealth()
+				< target.get(HealthPart.class).getHealth());
+		return isPotentialTargetBetter;
 	}
 	
 }

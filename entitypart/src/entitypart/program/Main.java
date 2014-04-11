@@ -41,14 +41,16 @@ public class Main {
 		List<Entity> characters = new ArrayList<Entity>();
 		
 		// create monsters
-		characters.add(CharacterFactory.createMeleer("M.Balrog", Alliance.MONSTERS));
-		characters.add(CharacterFactory.createMeleer("M.KillDwarf", Alliance.MONSTERS));
-		characters.add(CharacterFactory.createMeleer("M.ThunderClaw", Alliance.MONSTERS));
+		characters.add(CharacterFactory.createMeleer("M.Meleer1", Alliance.MONSTERS));
+		characters.add(CharacterFactory.createRanger("M.Ranger1", Alliance.MONSTERS));
+		characters.add(CharacterFactory.createFlyingRanger("M.FlyingRanger1", Alliance.MONSTERS));
+		characters.add(CharacterFactory.createSupportMage("M.SupportMage1", Alliance.MONSTERS));
 		
-		// create villagers
-		characters.add(CharacterFactory.createMeleer("V.Gunther", Alliance.VILLAGERS));
-		characters.add(CharacterFactory.createMeleer("V.Amy", Alliance.VILLAGERS));
-		characters.add(CharacterFactory.createMeleer("V.Frodo", Alliance.VILLAGERS));
+//		// create villagers
+		characters.add(CharacterFactory.createMeleer("V.Meleer1", Alliance.VILLAGERS));
+		characters.add(CharacterFactory.createRanger("V.Ranger1", Alliance.VILLAGERS));
+		characters.add(CharacterFactory.createFlyingRanger("V.FlyingRanger1", Alliance.VILLAGERS));
+		characters.add(CharacterFactory.createSupportMage("V.SupportMage1", Alliance.VILLAGERS));
 		
 		return characters;
 	}

@@ -12,6 +12,10 @@ public class HealthPart extends Part {
 		this.health = maxHealth;
 	}
 	
+	public boolean isAlive() {
+		return health > 0;
+	}
+	
 	public float getMaxHealth() {
 		return maxHealth;
 	}
