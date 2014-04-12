@@ -4,11 +4,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import entitypart.util.EventManager;
+
 public class EntityManager {
 
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
+	
+	public EntityManager(EventManager eventManager) {
+		eventManager.listen(EntityCreatedEvent.class, new EntityCreatedListener() {
+			@Override
+			public void created(Entity entity) {
+				add(entity);
+			}
+		});
+	}
 	
 	public List<Entity> getAll() {
 		return new ArrayList<Entity>(entities);

@@ -5,7 +5,7 @@ import java.util.List;
 import entitypart.epf.Entity;
 import entitypart.epf.EntityManager;
 import entitypart.items.HealSpell;
-import entitypart.items.Spell;
+import entitypart.items.SummonSpell;
 import entitypart.items.Weapon;
 import entitypart.parts.Alliance;
 import entitypart.parts.AlliancePart;
@@ -15,28 +15,32 @@ import entitypart.parts.HealthPart;
 import entitypart.parts.ManaPart;
 import entitypart.parts.Mentality;
 import entitypart.parts.MentalityPart;
+import entitypart.parts.TimedDeathPart;
+import entitypart.util.EventManager;
 
 public class BattleSystem {
 	
+	private EventManager eventManager;
 	private EntityManager entityManager;
 	
-	public BattleSystem(EntityManager entityManager) {
+	public BattleSystem(EventManager eventManager, EntityManager entityManager) {
+		this.eventManager = eventManager;
 		this.entityManager = entityManager;
 	}
 	
 	public void update() {
 		List<Entity> characters = entityManager.getAll();
 		
-		for (Entity entity : characters) {
-			if (!entity.get(HealthPart.class).isAlive()) {
-				entityManager.remove(entity);
-				System.out.println(entity.get(DescriptionPart.class).getName() + " is dead!");
+		for (Entity character : characters) {
+			if (!isAlive(character)) {
+				entityManager.remove(character);
+				System.out.println(character.get(DescriptionPart.class).getName() + " is dead!");
 			}
-			if (entity.isActive()) {
-				System.out.println(entity.get(DescriptionPart.class).getName() + " - Health: "
-						+ entity.get(HealthPart.class).getHealth() + " - Mana: " + 
-						+ entity.get(ManaPart.class).getMana());
-				act(entity, characters);
+			if (character.isActive()) {
+				System.out.println(character.get(DescriptionPart.class).getName() + " - Health: "
+						+ character.get(HealthPart.class).getHealth() + " - Mana: " + 
+						+ character.get(ManaPart.class).getMana());
+				act(character, characters);
 			}
 		}
 	}
@@ -53,13 +57,19 @@ public class BattleSystem {
 				attemptAttack(actingCharacter, characters);
 			}
 		}
+		else if (mentality == Mentality.SUMMON) {
+			boolean summoned = attemptSummon(actingCharacter);
+			if (!summoned) {
+				attemptAttack(actingCharacter, characters);
+			}
+		}
 	}
 	
 	private void attemptAttack(Entity actingCharacter, List<Entity> characters) {
 		Alliance alliance = actingCharacter.get(AlliancePart.class).getAlliance();
 		
 		for (Entity character : characters) {
-			if (character.get(HealthPart.class).isAlive()) {
+			if (isAlive(character)) {
 				Alliance characterAlliance = character.get(AlliancePart.class).getAlliance();
 				if (characterAlliance != alliance) {
 					Weapon weapon = actingCharacter.get(EquipmentPart.class).getWeapon();
@@ -73,13 +83,13 @@ public class BattleSystem {
 	private boolean attemptHeal(Entity actingCharacter, List<Entity> characters) {
 		Alliance alliance = actingCharacter.get(AlliancePart.class).getAlliance();
 		ManaPart manaPart = actingCharacter.get(ManaPart.class);
-		Spell healSpell = actingCharacter.get(EquipmentPart.class).getSpell(HealSpell.class);
+		HealSpell healSpell = actingCharacter.get(EquipmentPart.class).getSpell(HealSpell.class);
 		boolean healed = false;
 		Entity target = null;
 		
 		if (healSpell != null && manaPart.getMana() >= healSpell.getCost()) {
 			for (Entity character : characters) {
-				if (character.get(HealthPart.class).isAlive()) {
+				if (isAlive(character)) {
 					Alliance characterAlliance = character.get(AlliancePart.class).getAlliance();
 					if (characterAlliance == alliance) {
 						if (isPotentialHealTargetBetter(target, character)) {
@@ -105,6 +115,28 @@ public class BattleSystem {
 				&& (target == null || potentialTarget.get(HealthPart.class).getHealth()
 				< target.get(HealthPart.class).getHealth());
 		return isPotentialTargetBetter;
+	}
+	
+	private boolean attemptSummon(Entity actingCharacter) {
+		ManaPart manaPart = actingCharacter.get(ManaPart.class);
+		SummonSpell summonSpell = actingCharacter.get(EquipmentPart.class).getSpell(SummonSpell.class);
+		boolean summoned = false;
+		
+		if (summonSpell != null && manaPart.getMana() >= summonSpell.getCost()) {
+			summonSpell.use(eventManager);
+			manaPart.setMana(manaPart.getMana() - summonSpell.getCost());
+			summoned = true;
+		}
+		
+		return summoned;
+	}
+	
+	private boolean isAlive(Entity character) {
+		boolean timedDeath = character.has(TimedDeathPart.class) && character.get(TimedDeathPart.class).isDead();
+		if (character.isActive() && character.get(HealthPart.class).isAlive() && !timedDeath) {
+			return true;
+		}
+		return false;
 	}
 	
 }

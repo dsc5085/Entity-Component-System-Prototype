@@ -34,10 +34,11 @@ public class EquipmentPart extends Part {
 		return false;
 	}
 	
-	public <T extends Spell> Spell getSpell(Class<T> spellClass) {
+	@SuppressWarnings("unchecked")
+	public <T extends Spell> T getSpell(Class<T> spellClass) {
 		for (Spell spell : spells) {
 			if (spell.getClass() == spellClass) {
-				return spell;
+				return (T)spell;
 			}
 		}
 		return null;

@@ -9,6 +9,10 @@ public class ManaPart extends Part {
 	
 	public ManaPart(float maxMana) {
 		this.maxMana = maxMana;
+	}
+	
+	@Override
+	public void initialize() {
 		this.mana = maxMana;
 	}
 	

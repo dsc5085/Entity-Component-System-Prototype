@@ -7,6 +7,7 @@ import entitypart.epf.Entity;
 import entitypart.items.AttackRange;
 import entitypart.items.HealSpell;
 import entitypart.items.Spell;
+import entitypart.items.SummonSpell;
 import entitypart.items.Weapon;
 import entitypart.parts.Alliance;
 import entitypart.parts.AlliancePart;
@@ -18,6 +19,7 @@ import entitypart.parts.ManaPart;
 import entitypart.parts.Mentality;
 import entitypart.parts.MentalityPart;
 import entitypart.parts.RestorePart;
+import entitypart.parts.TimedDeathPart;
 
 public class CharacterFactory {
 
@@ -66,6 +68,28 @@ public class CharacterFactory {
 		spells.add(new HealSpell("Light Heal", 25, 30));
 		mage.attach(new EquipmentPart(staff, spells));
 		return mage;
+	}
+	
+	/**
+	 * Creates a mage that summons demons.
+	 * @return Mage entity.
+	 */
+	public static Entity createSummoner(String name, Alliance alliance) {
+		Entity summoner = createBaseCharacter(name, 100, 100, alliance, Mentality.SUMMON);
+		Weapon staff = new Weapon("Staff", 10, 15, AttackRange.CLOSE);
+		Entity demon = createDemon("Demon", alliance);
+		List<Spell> spells = new ArrayList<Spell>();
+		spells.add(new SummonSpell("Summon Demon", 70, demon));
+		summoner.attach(new EquipmentPart(staff, spells));
+		return summoner;
+	}
+	
+	private static Entity createDemon(String name, Alliance alliance) {
+		Entity demon = createBaseCharacter(name, 100, 0, alliance, Mentality.OFFENSIVE);
+		Weapon claw = new Weapon("Claw", 15, 30, AttackRange.CLOSE);
+		demon.attach(new EquipmentPart(claw));
+		demon.attach(new TimedDeathPart(4));
+		return demon;
 	}
 	
 	private static Entity createBaseCharacter(String name, float health, float mana, Alliance alliance, 

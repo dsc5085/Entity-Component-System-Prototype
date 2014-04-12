@@ -9,6 +9,10 @@ public class HealthPart extends Part {
 	
 	public HealthPart(float maxHealth) {
 		this.maxHealth = maxHealth;
+	}
+	
+	@Override
+	public void initialize() {
 		this.health = maxHealth;
 	}
 	

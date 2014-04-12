@@ -1,6 +1,5 @@
 package entitypart.items;
 
-import entitypart.epf.Entity;
 
 public abstract class Spell {
 
@@ -15,7 +14,5 @@ public abstract class Spell {
 	public float getCost() {
 		return cost;
 	}
-	
-	public abstract void use(Entity target);
 	
 }
