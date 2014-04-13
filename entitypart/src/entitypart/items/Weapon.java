@@ -19,16 +19,18 @@ public class Weapon {
 		this.attackRange = attackRange;
 	}
 
-	public void attack(Entity target) {
+	public boolean canAttack(Entity target) {
 		boolean targetFlying = target.has(FlyingPart.class);
-		if (!targetFlying || (targetFlying && attackRange == AttackRange.FAR)) {
-			HealthPart healthPart = target.get(HealthPart.class);
-			float damage = minDamage + (int)(Math.random() * (maxDamage - minDamage) + 1); 
-			float newHealth = healthPart.getHealth() - damage;
-			target.get(HealthPart.class).setHealth(newHealth);
-			System.out.println("\tAttacking with " + name + ".  " + damage + " damage dealt to "
-					+ target.get(DescriptionPart.class).getName());
-		}
+		return !targetFlying || (targetFlying && attackRange == AttackRange.FAR);
+	}
+	
+	public void attack(Entity target) {
+		HealthPart healthPart = target.get(HealthPart.class);
+		float damage = minDamage + (int)(Math.random() * (maxDamage - minDamage) + 1); 
+		float newHealth = healthPart.getHealth() - damage;
+		target.get(HealthPart.class).setHealth(newHealth);
+		System.out.println("\tAttacking with " + name + ".  " + damage + " damage dealt to "
+				+ target.get(DescriptionPart.class).getName());
 	}
 	
 }

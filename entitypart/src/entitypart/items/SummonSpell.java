@@ -1,7 +1,7 @@
 package entitypart.items;
 
 import entitypart.epf.Entity;
-import entitypart.epf.EntityCreatedEvent;
+import entitypart.epf.EntityCreateEvent;
 import entitypart.parts.HealthPart;
 import entitypart.util.EventManager;
 
@@ -17,7 +17,7 @@ public class SummonSpell extends Spell {
 	public void use(EventManager eventManager) {
 		HealthPart healthPart = summon.get(HealthPart.class);
 		healthPart.setHealth(healthPart.getMaxHealth());
-		eventManager.notify(new EntityCreatedEvent(summon));
+		eventManager.notify(new EntityCreateEvent(summon));
 		System.out.println("\tCasting " + name);
 	}
 

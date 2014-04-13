@@ -73,8 +73,10 @@ public class BattleSystem {
 				Alliance characterAlliance = character.get(AlliancePart.class).getAlliance();
 				if (characterAlliance != alliance) {
 					Weapon weapon = actingCharacter.get(EquipmentPart.class).getWeapon();
-					weapon.attack(character);
-					break;
+					if (weapon.canAttack(character)) {
+						weapon.attack(character);
+						break;
+					}
 				}
 			}
 		}

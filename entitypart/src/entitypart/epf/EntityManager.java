@@ -13,10 +13,17 @@ public class EntityManager {
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
 	
 	public EntityManager(EventManager eventManager) {
-		eventManager.listen(EntityCreatedEvent.class, new EntityCreatedListener() {
+		eventManager.listen(EntityCreateEvent.class, new EntityCreateListener() {
 			@Override
-			public void created(Entity entity) {
+			public void create(Entity entity) {
 				add(entity);
+			}
+		});
+		
+		eventManager.listen(EntityRemoveEvent.class, new EntityRemoveListener() {
+			@Override
+			public void remove(Entity entity) {
+				remove(entity);
 			}
 		});
 	}
