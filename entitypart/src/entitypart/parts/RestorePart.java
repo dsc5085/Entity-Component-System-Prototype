@@ -2,6 +2,11 @@ package entitypart.parts;
 
 import entitypart.epf.Part;
 
+/**
+ * Restores entity health and mana each timestep.
+ * @author David Chen
+ *
+ */
 public class RestorePart extends Part {
 	
 	private float healthRestoreRate;

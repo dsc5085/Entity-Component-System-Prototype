@@ -84,6 +84,12 @@ public class CharacterFactory {
 		return summoner;
 	}
 	
+	/**
+	 * Creates a melee-focused, temporary living demon.
+	 * @param name
+	 * @param alliance
+	 * @return Demon.
+	 */
 	private static Entity createDemon(String name, Alliance alliance) {
 		Entity demon = createBaseCharacter(name, 100, 0, alliance, Mentality.OFFENSIVE);
 		Weapon claw = new Weapon("Claw", 15, 30, AttackRange.CLOSE);

@@ -14,10 +14,12 @@ public class Main {
 	// main entry to the game application
 	public static void main(String[] args) throws InterruptedException
 	{
+		// create high-level managers and systems
 		EventManager eventManager = new EventManager();
 		EntityManager entityManager = new EntityManager(eventManager);
 		BattleSystem battleSystem = new BattleSystem(eventManager, entityManager);
 		
+		// creates the characters to add to battle
 		List<Entity> characters = createCharacters();
 		entityManager.addAll(characters);
 		

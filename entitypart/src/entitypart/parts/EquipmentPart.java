@@ -7,6 +7,11 @@ import entitypart.epf.Part;
 import entitypart.items.Spell;
 import entitypart.items.Weapon;
 
+/**
+ * Manages entity weapon and spells.
+ * @author David Chen
+ *
+ */
 public class EquipmentPart extends Part {
 
 	private Weapon weapon;

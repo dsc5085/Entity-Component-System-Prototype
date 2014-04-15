@@ -18,6 +18,11 @@ import entitypart.parts.MentalityPart;
 import entitypart.parts.TimedDeathPart;
 import entitypart.util.EventManager;
 
+/**
+ * Manages game rules, game logic, and character A.I.
+ * @author David Chen
+ *
+ */
 public class BattleSystem {
 	
 	private EventManager eventManager;
@@ -32,11 +37,12 @@ public class BattleSystem {
 		List<Entity> characters = entityManager.getAll();
 		
 		for (Entity character : characters) {
+			// mark entity for removal if dead, else update him
 			if (!isAlive(character)) {
 				entityManager.remove(character);
 				System.out.println(character.get(DescriptionPart.class).getName() + " is dead!");
 			}
-			if (character.isActive()) {
+			else {
 				System.out.println(character.get(DescriptionPart.class).getName() + " - Health: "
 						+ character.get(HealthPart.class).getHealth() + " - Mana: " + 
 						+ character.get(ManaPart.class).getMana());
@@ -48,6 +54,7 @@ public class BattleSystem {
 	public void act(Entity actingCharacter, List<Entity> characters) {
 		Mentality mentality = actingCharacter.get(MentalityPart.class).getMentality();
 		
+		// choose an A.I. path depending on character's mentality
 		if (mentality == Mentality.OFFENSIVE) {
 			attemptAttack(actingCharacter, characters);
 		}
@@ -68,6 +75,7 @@ public class BattleSystem {
 	private void attemptAttack(Entity actingCharacter, List<Entity> characters) {
 		Alliance alliance = actingCharacter.get(AlliancePart.class).getAlliance();
 		
+		// try to find enemy and damage him with weapon
 		for (Entity character : characters) {
 			if (isAlive(character)) {
 				Alliance characterAlliance = character.get(AlliancePart.class).getAlliance();
@@ -88,7 +96,8 @@ public class BattleSystem {
 		HealSpell healSpell = actingCharacter.get(EquipmentPart.class).getSpell(HealSpell.class);
 		boolean healed = false;
 		Entity target = null;
-		
+
+		// try to use heal spell on friend
 		if (healSpell != null && manaPart.getMana() >= healSpell.getCost()) {
 			for (Entity character : characters) {
 				if (isAlive(character)) {
@@ -111,6 +120,12 @@ public class BattleSystem {
 		return healed;
 	}
 	
+	/**
+	 * Attempts to get the better target for healing depending on how low the healths are.
+	 * @param target current heal target
+	 * @param potentialTarget potential target that can become target if it's better
+	 * @return if the target is better than the potential target for healing
+	 */
 	private boolean isPotentialHealTargetBetter(Entity target, Entity potentialTarget) {
 		HealthPart potentialTargetHealthPart = potentialTarget.get(HealthPart.class);
 		boolean isPotentialTargetBetter = potentialTargetHealthPart.getHealth() < potentialTargetHealthPart.getMaxHealth()
@@ -119,6 +134,11 @@ public class BattleSystem {
 		return isPotentialTargetBetter;
 	}
 	
+	/**
+	 * Summon if have enough mana and has a summon spell.
+	 * @param actingCharacter Character to try to summon with
+	 * @return if the summon successfully occured
+	 */
 	private boolean attemptSummon(Entity actingCharacter) {
 		ManaPart manaPart = actingCharacter.get(ManaPart.class);
 		SummonSpell summonSpell = actingCharacter.get(EquipmentPart.class).getSpell(SummonSpell.class);

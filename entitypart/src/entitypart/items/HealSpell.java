@@ -13,6 +13,10 @@ public class HealSpell extends Spell {
 		this.healAmount = healAmount;
 	}
 
+	/**
+	 * Heals up to max health.
+	 * @param target entity to heal
+	 */
 	public void use(Entity target) {
 		HealthPart healthPart = target.get(HealthPart.class);
 		float maxHealAmount = Math.min(healthPart.getMaxHealth() - healthPart.getHealth(), healAmount);

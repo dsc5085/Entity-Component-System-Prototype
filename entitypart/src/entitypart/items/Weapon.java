@@ -20,10 +20,15 @@ public class Weapon {
 	}
 
 	public boolean canAttack(Entity target) {
+		// check if weapon can attack flying entities
 		boolean targetFlying = target.has(FlyingPart.class);
 		return !targetFlying || (targetFlying && attackRange == AttackRange.FAR);
 	}
 	
+	/**
+	 * Does damage to target in the range of min damage to max damage.
+	 * @param target
+	 */
 	public void attack(Entity target) {
 		HealthPart healthPart = target.get(HealthPart.class);
 		float damage = minDamage + (int)(Math.random() * (maxDamage - minDamage) + 1); 

@@ -1,5 +1,12 @@
 package entitypart.items;
 
 public enum AttackRange {
-	CLOSE, FAR
+	/**
+	 * Cannot attack flying entities.
+	 */
+	CLOSE,
+	/**
+	 * Can attack flying entities.
+	 */
+	FAR
 }

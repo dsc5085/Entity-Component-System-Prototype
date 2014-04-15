@@ -2,6 +2,11 @@ package entitypart.parts;
 
 import entitypart.epf.Part;
 
+/**
+ * Keeps track if entity's lifetime is greater than it's max life.  Then, it should die.
+ * @author David Chen
+ *
+ */
 public class TimedDeathPart extends Part {
 
 	private float maxLife;
@@ -12,13 +17,13 @@ public class TimedDeathPart extends Part {
 		this.life = 0;
 	}
 	
+	public boolean isDead() {
+		return life >= maxLife;
+	}
+	
 	@Override
 	public void initialize() {
 		this.life = 0;
-	}
-	
-	public boolean isDead() {
-		return life >= maxLife;
 	}
 	
 	@Override

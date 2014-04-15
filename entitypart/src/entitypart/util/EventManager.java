@@ -5,6 +5,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Modified from original implementation at 
+ * http://stackoverflow.com/questions/937302/simple-java-message-dispatching-system
+ *
+ */
 public final class EventManager {
 
 	/** mapping of class events to active listeners **/

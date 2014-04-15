@@ -1,6 +1,5 @@
 package entitypart.items;
 
-
 public abstract class Spell {
 
 	protected String name;
