@@ -4,12 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entitypart.epf.Entity;
+import entitypart.epf.EntityAdapted;
+import entitypart.epf.EntityAdapter;
 import entitypart.epf.EntityManager;
 import entitypart.parts.Alliance;
+import entitypart.parts.AlliancePart;
+import entitypart.parts.DescriptionPart;
+import entitypart.parts.EquipmentPart;
+import entitypart.parts.FlyingPart;
+import entitypart.parts.HealthPart;
+import entitypart.parts.ManaPart;
+import entitypart.parts.MentalityPart;
+import entitypart.parts.RestorePart;
+import entitypart.parts.TimedDeathPart;
 import entitypart.systems.BattleSystem;
 import entitypart.util.EventManager;
+import entitypart.util.XmlWriter;
 
 public class Main {
+	
+	private static Class<?>[] boundClasses = new Class<?>[] {
+		AlliancePart.class, 
+		DescriptionPart.class, 
+		EquipmentPart.class, 
+		FlyingPart.class, 
+		HealthPart.class, 
+		ManaPart.class, 
+		MentalityPart.class, 
+		RestorePart.class, 
+		TimedDeathPart.class, 
+		EntityAdapted.class
+	};
 
 	// main entry to the game application
 	public static void main(String[] args) throws InterruptedException
@@ -20,7 +45,11 @@ public class Main {
 		BattleSystem battleSystem = new BattleSystem(eventManager, entityManager);
 		
 		// creates the characters to add to battle
+		XmlWriter.write(HealthPart.class, new HealthPart(100), "");
 		List<Entity> characters = createCharacters();
+		/* TODO: Temp */ for (Entity entity : characters) {
+			XmlWriter.write(EntityAdapted.class, entity, "", new EntityAdapter(), boundClasses);
+		}
 		entityManager.addAll(characters);
 		
 		float time = 0;

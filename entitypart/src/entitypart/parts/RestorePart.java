@@ -1,5 +1,10 @@
 package entitypart.parts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import entitypart.epf.Part;
 
 /**
@@ -7,10 +12,17 @@ import entitypart.epf.Part;
  * @author David Chen
  *
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestorePart extends Part {
-	
+
+	@XmlElement
 	private float healthRestoreRate;
+	@XmlElement
 	private float manaRestoreRate;
+	
+	public RestorePart() {
+	}
 
 	public RestorePart(float healthRestoreRate, float manaRestoreRate) {
 		this.healthRestoreRate = healthRestoreRate;

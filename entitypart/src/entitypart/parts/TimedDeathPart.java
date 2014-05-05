@@ -1,5 +1,11 @@
 package entitypart.parts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import entitypart.epf.Part;
 
 /**
@@ -7,14 +13,20 @@ import entitypart.epf.Part;
  * @author David Chen
  *
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class TimedDeathPart extends Part {
 
+	@XmlElement
 	private float maxLife;
-	private float life;
+	@XmlTransient
+	private float life = 0;
+	
+	public TimedDeathPart() {
+	}
 	
 	public TimedDeathPart(float maxLife) {
 		this.maxLife = maxLife;
-		this.life = 0;
 	}
 	
 	public boolean isDead() {

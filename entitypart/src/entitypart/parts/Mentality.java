@@ -1,10 +1,13 @@
 package entitypart.parts;
 
+import javax.xml.bind.annotation.XmlEnum;
+
 /**
  * Determines A.I. approach.
  * @author David Chen
  *
  */
+@XmlEnum
 public enum Mentality {
 	/**
 	 * Only attack with weapon.

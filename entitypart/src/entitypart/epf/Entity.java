@@ -54,6 +54,13 @@ public class Entity {
 		}
 		return (T)parts.get(partClass);
 	}
+
+	/**
+	 * @return A list of all parts the entity is composed of.
+	 */
+	public List<Part> getAll() {
+		return new ArrayList<Part>(parts.values());
+	}
 	
 	/**
 	 * Adds a part.

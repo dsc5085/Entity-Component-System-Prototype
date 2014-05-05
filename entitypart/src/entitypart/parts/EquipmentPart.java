@@ -3,6 +3,11 @@ package entitypart.parts;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import entitypart.epf.Part;
 import entitypart.items.Spell;
 import entitypart.items.Weapon;
@@ -12,10 +17,17 @@ import entitypart.items.Weapon;
  * @author David Chen
  *
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class EquipmentPart extends Part {
 
+	@XmlElement
 	private Weapon weapon;
+	@XmlElement
 	private List<Spell> spells;
+	
+	public EquipmentPart() {
+	}
 	
 	public EquipmentPart(Weapon weapon) {
 		this(weapon, new ArrayList<Spell>());
