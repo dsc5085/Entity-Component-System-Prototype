@@ -45,10 +45,9 @@ public class Main {
 		BattleSystem battleSystem = new BattleSystem(eventManager, entityManager);
 		
 		// creates the characters to add to battle
-		XmlWriter.write(HealthPart.class, new HealthPart(100), "");
 		List<Entity> characters = createCharacters();
 		/* TODO: Temp */ for (Entity entity : characters) {
-			XmlWriter.write(EntityAdapted.class, entity, "", new EntityAdapter(), boundClasses);
+			XmlWriter.write(EntityAdapted.class, entity, "", new EntityAdapter(), boundClasses, "bindings.xml");
 		}
 		entityManager.addAll(characters);
 		
