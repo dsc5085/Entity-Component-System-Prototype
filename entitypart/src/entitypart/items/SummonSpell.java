@@ -26,10 +26,6 @@ public class SummonSpell extends Spell {
 		super(name, cost);
 		this.summon = summon;
 	}
-	
-	public Entity getSummon() {
-		return summon;
-	}
 
 	public void use(EventManager eventManager) {
 		eventManager.notify(new EntityCreateEvent(summon));

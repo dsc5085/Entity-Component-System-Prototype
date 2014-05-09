@@ -4,7 +4,7 @@
       <alliance>MONSTERS</alliance>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="mentalityPart">
-      <mentality>OFFENSIVE</mentality>
+      <mentality>SUPPORT</mentality>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="restorePart">
       <healthRestoreRate>0.01</healthRestoreRate>
@@ -14,18 +14,23 @@
       <name></name>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="manaPart">
-      <maxMana>0.0</maxMana>
+      <maxMana>100.0</maxMana>
       <mana>0.0</mana>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="healthPart">
-      <maxHealth>200.0</maxHealth>
+      <maxHealth>100.0</maxHealth>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="equipmentPart">
       <weapon>
-         <name>Sword</name>
-         <minDamage>25.0</minDamage>
-         <maxDamage>50.0</maxDamage>
+         <name>Staff</name>
+         <minDamage>10.0</minDamage>
+         <maxDamage>15.0</maxDamage>
          <attackRange>CLOSE</attackRange>
       </weapon>
+      <spells xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="healSpell">
+         <name>Light Heal</name>
+         <cost>25.0</cost>
+         <healAmount>30.0</healAmount>
+      </spells>
    </parts>
 </entityAdapted>

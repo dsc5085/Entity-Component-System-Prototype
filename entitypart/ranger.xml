@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entityAdapted>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="flyingPart"/>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="alliancePart">
       <alliance>MONSTERS</alliance>
    </parts>
@@ -18,14 +19,14 @@
       <mana>0.0</mana>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="healthPart">
-      <maxHealth>200.0</maxHealth>
+      <maxHealth>100.0</maxHealth>
    </parts>
    <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="equipmentPart">
       <weapon>
-         <name>Sword</name>
-         <minDamage>25.0</minDamage>
-         <maxDamage>50.0</maxDamage>
-         <attackRange>CLOSE</attackRange>
+         <name>Bow</name>
+         <minDamage>15.0</minDamage>
+         <maxDamage>35.0</maxDamage>
+         <attackRange>FAR</attackRange>
       </weapon>
    </parts>
 </entityAdapted>

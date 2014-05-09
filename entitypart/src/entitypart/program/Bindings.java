@@ -1,5 +1,6 @@
 package entitypart.program;
 
+import entitypart.epf.Entity;
 import entitypart.epf.EntityAdapted;
 import entitypart.items.HealSpell;
 import entitypart.items.Spell;
@@ -29,6 +30,7 @@ public class Bindings {
 		MentalityPart.class, 
 		RestorePart.class, 
 		TimedDeathPart.class,
+		Entity.class, 
 		EntityAdapted.class
 	};
 	

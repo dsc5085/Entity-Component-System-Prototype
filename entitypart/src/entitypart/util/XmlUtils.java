@@ -16,7 +16,7 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 
 public class XmlUtils {
 	
-	public static <T, TAdapted> T read(String path, XmlAdapter<T, TAdapted> xmlAdapter, Class<?>[] boundClasses, 
+	public static <TAdapted, T> T read(String path, XmlAdapter<TAdapted, T> xmlAdapter, Class<?>[] boundClasses, 
 			String bindingsPath) {
 		Map<String, Object> properties = new HashMap<String, Object>(1);
 		properties.put(JAXBContextProperties.OXM_METADATA_SOURCE, bindingsPath);
@@ -30,7 +30,7 @@ public class XmlUtils {
 			
 			@SuppressWarnings("unchecked")
 			TAdapted adaptedObject = (TAdapted)unmarshaller.unmarshal(file);
-			object = xmlAdapter.marshal(adaptedObject);
+			object = xmlAdapter.unmarshal(adaptedObject);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -39,8 +39,8 @@ public class XmlUtils {
 		return object;
 	}
 	
-	public static <T, TAdapted> void write(Class<TAdapted> adaptedObjectClass, T object, String path, 
-			XmlAdapter<T, TAdapted> xmlAdapter, Class<?>[] boundClasses, String bindingsPath) {
+	public static <TAdapted, T> void write(Class<TAdapted> adaptedObjectClass, T object, String path, 
+			XmlAdapter<TAdapted, T> xmlAdapter, Class<?>[] boundClasses, String bindingsPath) {
 		Map<String, Object> properties = new HashMap<String, Object>(1);
 		properties.put(JAXBContextProperties.OXM_METADATA_SOURCE, bindingsPath);
 		JAXBContext jaxbContext;
@@ -49,7 +49,7 @@ public class XmlUtils {
 			jaxbContext = JAXBContext.newInstance(boundClasses, properties);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			TAdapted adaptedObject = xmlAdapter.unmarshal(object);
+			TAdapted adaptedObject = xmlAdapter.marshal(object);
 			File file = new File(path);
 			
 			if (adaptedObjectClass.isAnnotationPresent(XmlRootElement.class)) {
