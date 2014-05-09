@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entitypart.epf.Entity;
+import entitypart.epf.EntityAdapter;
 import entitypart.items.AttackRange;
 import entitypart.items.HealSpell;
 import entitypart.items.Spell;
@@ -20,8 +21,16 @@ import entitypart.parts.Mentality;
 import entitypart.parts.MentalityPart;
 import entitypart.parts.RestorePart;
 import entitypart.parts.TimedDeathPart;
+import entitypart.util.XmlUtils;
 
 public class CharacterFactory {
+	
+	public static Entity createCharacter(String path, String name, Alliance alliance) {
+		Entity character = XmlUtils.read(path, new EntityAdapter(), Bindings.BOUND_CLASSES, "bindings.xml");
+		character.get(DescriptionPart.class).setName(name);
+		character.get(AlliancePart.class).setAlliance(alliance);
+		return character;
+	}
 
 	/**
 	 * Creates a tank with a weapon that deals high damage at close range.

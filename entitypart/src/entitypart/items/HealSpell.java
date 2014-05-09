@@ -15,6 +15,9 @@ public class HealSpell extends Spell {
 	
 	@XmlElement
 	private float healAmount;
+	
+	public HealSpell() {
+	}
 
 	public HealSpell(String name, float cost, float healAmount) {
 		super(name, cost);

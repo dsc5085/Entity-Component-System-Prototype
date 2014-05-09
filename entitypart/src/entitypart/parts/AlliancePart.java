@@ -30,4 +30,8 @@ public class AlliancePart extends Part {
 		return alliance;
 	}
 	
+	public void setAlliance(Alliance alliance) {
+		this.alliance = alliance;
+	}
+	
 }

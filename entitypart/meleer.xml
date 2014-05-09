@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entityAdapted>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="restorePart">
+      <healthRestoreRate>0.01</healthRestoreRate>
+      <manaRestoreRate>0.03</manaRestoreRate>
+   </parts>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="alliancePart">
+      <alliance>MONSTERS</alliance>
+   </parts>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="equipmentPart">
+      <weapon>
+         <name>Sword</name>
+         <minDamage>25.0</minDamage>
+         <maxDamage>50.0</maxDamage>
+         <attackRange>CLOSE</attackRange>
+      </weapon>
+   </parts>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="mentalityPart">
+      <mentality>OFFENSIVE</mentality>
+   </parts>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="manaPart">
+      <maxMana>0.0</maxMana>
+      <mana>0.0</mana>
+   </parts>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="healthPart">
+      <maxHealth>200.0</maxHealth>
+   </parts>
+   <parts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="descriptionPart">
+      <name></name>
+   </parts>
+</entityAdapted>
