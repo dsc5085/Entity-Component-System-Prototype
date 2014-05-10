@@ -1,9 +1,6 @@
 package entitypart.program;
 
-import entitypart.epf.Entity;
-import entitypart.epf.EntityAdapted;
 import entitypart.items.HealSpell;
-import entitypart.items.Spell;
 import entitypart.items.SummonSpell;
 import entitypart.parts.AlliancePart;
 import entitypart.parts.DescriptionPart;
@@ -17,8 +14,11 @@ import entitypart.parts.TimedDeathPart;
 
 public class Bindings {
 
+	/**
+	 * Required for serializing list of base types to derived types, e.g. when a list of parts is serialized, binding 
+	 * the health part class to the serialization will allow health parts in the list to be serialized correctly.
+	 */
 	public static Class<?>[] BOUND_CLASSES = new Class<?>[] {
-		Spell.class, 
 		HealSpell.class, 
 		SummonSpell.class, 
 		AlliancePart.class, 
@@ -29,9 +29,7 @@ public class Bindings {
 		ManaPart.class, 
 		MentalityPart.class, 
 		RestorePart.class, 
-		TimedDeathPart.class,
-		Entity.class, 
-		EntityAdapted.class
+		TimedDeathPart.class
 	};
 	
 }

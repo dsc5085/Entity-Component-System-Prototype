@@ -2,6 +2,11 @@ package entitypart.epf;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+/**
+ * Used to marshal/unmarshal between the serializable {@link EntityAdapted} and {@link Entity}.
+ * @author David Chen
+ *
+ */
 public class EntityAdapter extends XmlAdapter<EntityAdapted, Entity> {
 
 	@Override

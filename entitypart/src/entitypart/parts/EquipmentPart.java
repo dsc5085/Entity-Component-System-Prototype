@@ -3,9 +3,8 @@ package entitypart.parts;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import entitypart.epf.Part;
@@ -18,12 +17,12 @@ import entitypart.items.Weapon;
  *
  */
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.NONE)
 public class EquipmentPart extends Part {
 
 	@XmlElement
 	private Weapon weapon;
-	@XmlElement
+	@XmlElementWrapper
+	@XmlElement(name = "spell")
 	private List<Spell> spells;
 	
 	public EquipmentPart() {

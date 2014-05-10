@@ -16,6 +16,14 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 
 public class XmlUtils {
 	
+	/**
+	 * Reads an xml file to an object.
+	 * @param path path to the xml file
+	 * @param xmlAdapter adapter
+	 * @param boundClasses used to correctly unmarshal base types to derived types
+	 * @param bindingsPath path to the bindings file used to specify JAXB attributes on unmodifiable classes
+	 * @return object of type T
+	 */
 	public static <TAdapted, T> T read(String path, XmlAdapter<TAdapted, T> xmlAdapter, Class<?>[] boundClasses, 
 			String bindingsPath) {
 		Map<String, Object> properties = new HashMap<String, Object>(1);
@@ -39,6 +47,15 @@ public class XmlUtils {
 		return object;
 	}
 	
+	/**
+	 * Writes an object to an xml file.
+	 * @param adaptedObjectClass adapted object class
+	 * @param object object to write
+	 * @param path path of the xml file to write to
+	 * @param xmlAdapter xml adapter
+	 * @param boundClasses used to correctly marshal base types to derived types
+	 * @param bindingsPath path to the bindings file used to specify JAXB attributes on unmodifiable classes
+	 */
 	public static <TAdapted, T> void write(Class<TAdapted> adaptedObjectClass, T object, String path, 
 			XmlAdapter<TAdapted, T> xmlAdapter, Class<?>[] boundClasses, String bindingsPath) {
 		Map<String, Object> properties = new HashMap<String, Object>(1);

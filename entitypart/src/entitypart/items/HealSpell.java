@@ -1,7 +1,5 @@
 package entitypart.items;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,7 +8,6 @@ import entitypart.parts.DescriptionPart;
 import entitypart.parts.HealthPart;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.NONE)
 public class HealSpell extends Spell {
 	
 	@XmlElement
