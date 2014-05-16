@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author David Chen
  *
  */
-@XmlRootElement
+@XmlRootElement(name = "entity")
 public class EntityAdapted {
 
 	@XmlElementWrapper

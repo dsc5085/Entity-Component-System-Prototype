@@ -1,5 +1,7 @@
 package entitypart.parts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import entitypart.epf.Part;
@@ -10,6 +12,7 @@ import entitypart.epf.Part;
  *
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class FlyingPart extends Part {
 	
 	public FlyingPart() {

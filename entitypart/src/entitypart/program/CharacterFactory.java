@@ -17,7 +17,7 @@ public class CharacterFactory {
 	 * @return new character
 	 */
 	public static Entity createCharacter(String path, String name, Alliance alliance) {
-		Entity character = XmlUtils.read(path, new EntityAdapter(), Bindings.BOUND_CLASSES, "bindings.xml");
+		Entity character = XmlUtils.read(Paths.CHARACTERS + path, new EntityAdapter(), Bindings.BOUND_CLASSES, "bindings.xml");
 		character.get(DescriptionPart.class).setName(name);
 		character.get(AlliancePart.class).setAlliance(alliance);
 		return character;

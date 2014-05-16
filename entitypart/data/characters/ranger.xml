@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity>
+   <parts>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="flyingPart"/>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="manaPart">
+         <maxMana>0.0</maxMana>
+         <mana>0.0</mana>
+      </part>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="restorePart">
+         <healthRestoreRate>0.01</healthRestoreRate>
+         <manaRestoreRate>0.03</manaRestoreRate>
+      </part>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="healthPart">
+         <maxHealth>100.0</maxHealth>
+      </part>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="equipmentPart">
+         <weapon>
+            <name>Bow</name>
+            <minDamage>15.0</minDamage>
+            <maxDamage>35.0</maxDamage>
+            <attackRange>FAR</attackRange>
+         </weapon>
+         <spells/>
+      </part>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="descriptionPart">
+         <name></name>
+      </part>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="alliancePart">
+         <alliance>MONSTERS</alliance>
+      </part>
+      <part xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="mentalityPart">
+         <mentality>OFFENSIVE</mentality>
+      </part>
+   </parts>
+</entity>
