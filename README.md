@@ -3,4 +3,4 @@ entitypart
 
 Entities-parts framework and RPG battle example (Java).
 
-Completed May 2014
+Release Date: May 2014
